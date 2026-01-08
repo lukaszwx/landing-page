@@ -1,0 +1,203 @@
+:root {
+    --bg: #000;
+    --text: #fff;
+    --muted: #b3b3b3;
+    --accent: #1f4bff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ================= LOADER ================= */
+.loader {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+/* ================= HEADER ================= */
+.header {
+    padding: 25px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.header nav a {
+    position: relative;
+    color: var(--text);
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: .95rem;
+    padding-bottom: 6px;
+}
+
+.header nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--accent);
+    transition: width .35s ease;
+}
+
+.header nav a:hover::after {
+    width: 100%;
+}
+
+/* ================= HERO ================= */
+.hero {
+    min-height: 90vh;
+    padding: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 520px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    color: var(--muted);
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.hero-visual {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(31,75,255,.4), transparent 60%);
+    filter: blur(40px);
+    border-radius: 50%;
+}
+
+/* ================= SECTIONS ================= */
+.section {
+    padding: 100px 80px;
+}
+
+h3 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    gap: 30px;
+}
+
+.card {
+    background: #0f0f0f;
+    padding: 30px;
+    border-radius: 14px;
+    flex: 1;
+    cursor: pointer;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.card i {
+    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Steps */
+.steps {
+    display: flex;
+    gap: 20px;
+}
+
+.step {
+    flex: 1;
+    padding: 25px;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+    padding: 12px 26px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .25s ease;
+    display: inline-block;
+}
+
+.btn.primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn.secondary {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+/* ================= FOOTER ================= */
+footer {
+    padding: 40px;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .cards, .steps {
+        flex-direction: column;
+    }
+
+    .section {
+        padding: 60px 20px;
+    }
+
+    .header nav {
+        display: none;
+    }
+}
