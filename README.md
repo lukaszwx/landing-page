@@ -4,11 +4,6 @@ Landing page moderna desenvolvida com foco em **performance, design e experiênc
 
 ---
 
-## 📸 Preview
-
-![Preview do projeto](./preview.png)
-
----
 
 ## 🧠 Sobre o projeto
 
