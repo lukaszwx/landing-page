@@ -1,106 +1,81 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= LOADER =================
-window.addEventListener("load", () => {
-    gsap.to(".loader-circle", {
-        scale: 1.5,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power2.out"
-    });
-
-    gsap.to(".loader", {
-        opacity: 0,
-        delay: 0.4,
-        duration: 0.6,
-        onComplete: () => document.querySelector(".loader").remove()
-    });
-});
-
-// ================= HERO =================
-gsap.from(".hero-title", {
-    y: 40,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out"
-});
-
-gsap.from(".hero-text", {
-    y: 30,
-    opacity: 0,
-    delay: 0.3,
+// LOADER
+gsap.timeline()
+.to(".loader-circle", {
+    scale: 8,
     duration: 0.8
-});
-
-gsap.from(".hero-buttons a", {
-    y: 20,
+})
+.to(".loader", {
     opacity: 0,
-    stagger: 0.15,
-    delay: 0.6
+    duration: 0.5
+}, "-=0.3")
+.to(".loader", {
+    display: "none"
 });
 
-// ================= MICRO-INTERAÇÕES =================
+// HERO
+gsap.timeline({ delay: 0.5 })
+.from(".hero-title", { y: 60, opacity: 0, duration: 1 })
+.from(".hero-text", { y: 40, opacity: 0 }, "-=0.6")
+.from(".hero-buttons a", { y: 20, opacity: 0, stagger: 0.15 }, "-=0.5");
 
-// Botões
-document.querySelectorAll(".btn").forEach(btn => {
-    btn.addEventListener("mouseenter", () => {
-        gsap.to(btn, { y: -2, boxShadow: "0 12px 30px rgba(31,75,255,.45)", duration: 0.25 });
+// CURSOR
+const cursor = document.querySelector(".cursor");
+
+window.addEventListener("mousemove", e => {
+    gsap.to(cursor, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.1
     });
-    btn.addEventListener("mouseleave", () => {
-        gsap.to(btn, { y: 0, boxShadow: "none", duration: 0.25 });
-    });
-    btn.addEventListener("mousedown", () => gsap.to(btn, { scale: 0.96, duration: 0.1 }));
-    btn.addEventListener("mouseup", () => gsap.to(btn, { scale: 1, duration: 0.15 }));
 });
 
-// Logo
-gsap.to(".logo", {
-    filter: "drop-shadow(0 0 14px rgba(31,75,255,.6))",
-    duration: 2.2,
-    repeat: -1,
-    yoyo: true,
-    ease: "sine.inOut"
+// paralax
+gsap.to(".hero-bg-text", {
+    x: 200,
+    scrollTrigger: {
+        trigger: ".hero",
+        scrub: true
+    }
 });
 
-document.querySelector(".logo").addEventListener("mouseenter", () => {
-    gsap.to(".logo", { scale: 1.05, duration: 0.25 });
-});
-document.querySelector(".logo").addEventListener("mouseleave", () => {
-    gsap.to(".logo", { scale: 1, duration: 0.25 });
+// REVEALl
+gsap.utils.toArray(".reveal").forEach(el => {
+    gsap.fromTo(el,
+        { opacity: 0, y: 60, filter: "blur(10px)" },
+        {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 1,
+            scrollTrigger: {
+                trigger: el,
+                start: "top 85%"
+            }
+        }
+    );
 });
 
-// Cards
+// CARDS 3d
 document.querySelectorAll(".card").forEach(card => {
-    card.addEventListener("mouseenter", () => {
-        gsap.to(card, { y: -10, boxShadow: "0 20px 40px rgba(31,75,255,.25)", duration: 0.3 });
+    card.addEventListener("mousemove", e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        gsap.to(card, {
+            rotateY: (x / rect.width - 0.5) * 10,
+            rotateX: -(y / rect.height - 0.5) * 10,
+            duration: 0.3
+        });
     });
+
     card.addEventListener("mouseleave", () => {
-        gsap.to(card, { y: 0, boxShadow: "none", duration: 0.3 });
-    });
-});
-
-// ================= SCROLL REVEAL =================
-gsap.utils.toArray(".reveal").forEach(section => {
-    gsap.from(section, {
-        scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power3.out"
-    });
-});
-
-gsap.utils.toArray(".reveal-stagger").forEach(container => {
-    gsap.from(container.children, {
-        scrollTrigger: {
-            trigger: container,
-            start: "top 85%",
-        },
-        y: 30,
-        opacity: 0,
-        stagger: 0.15
+        gsap.to(card, {
+            rotateX: 0,
+            rotateY: 0,
+            duration: 0.4
+        });
     });
 });
